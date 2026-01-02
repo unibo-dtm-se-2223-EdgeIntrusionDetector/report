@@ -54,7 +54,6 @@ The following Class Diagram represents the **Data Acquisition Layer**. The key d
 
 The class is designed to accept URLs via Dependency Injection in the constructor (`__init__`), ensuring that the component is testable and not hard-coded to specific external servers.
 
-```plantuml
 @startuml
 skinparam classAttributeIconSize 0
 
