@@ -14,10 +14,14 @@ Ideally, the design should be the same, regardless of the technological choices 
 
 ## Architecture 
 
-- Which architectural style (e.g. layered, object-based, event-based, shared dataspace)? Why? Why not the others?
-- Provide details about the actual architecture (e.g. N-tier, hexagonal, etc.) you are going to adopt. Motivate your choice.
-- Provide a high-level overview of the architecture, possibly with a diagram
-- Describe the responsibilities of each architectural component
+The system adopts a **Layered Architecture** style combined with a **Pipeline** pattern for the data processing stages. This choice is motivated by the need to strictly separate the data acquisition logic (which depends on external unstable sources) from the core machine learning logic (which requires stable input) and the deployment logic (embedded constraints).
+
+The architecture consists of three main layers:
+1.  **Data Acquisition Layer**: Responsible for retrieving raw threat intelligence data from external sources and harmonizing it into a standard format.
+2.  **Modelling Layer**: Responsible for training the Neural Network and exporting the optimized model.
+3.  **Edge Deployment Layer**: The target embedded environment (STM32) where the inference takes place.
+
+This separation allows for independent testing of the scraper and the neural network.
 
 > UML Components diagrams are welcome here
 
@@ -46,11 +50,35 @@ Ideally, the design should be the same, regardless of the technological choices 
 
 ### Object-oriented modelling
 
-- What are the main data types (e.g. classes) of the system?
-- What are the main attributes and methods of each data type?
-- How do data types relate to each other?
+The following Class Diagram represents the **Data Acquisition Layer**. The key design decision here is the **Encapsulation** of the HTTP logic within the `DatasetLoader` class.
 
-> UML class diagrams are welcome here
+The class is designed to accept URLs via Dependency Injection in the constructor (`__init__`), ensuring that the component is testable and not hard-coded to specific external servers.
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+package "edge_ids.data" {
+    class DatasetLoader {
+        - benign_url : str
+        - malicious_url : str
+        + __init__(benign_url : str, malicious_url : str)
+        + download_benign() : List<str>
+        + download_malicious() : List<str>
+        + get_dataset() : DataFrame
+    }
+}
+
+note right of DatasetLoader::benign_url
+  Points to a frozen version ID 
+  of the Tranco List (Top 1M sites)
+end note
+
+note right of DatasetLoader::malicious_url
+  Points to URLHaus Open Threat Feed
+end note
+
+@enduml
 
 ### In case of a distributed system
 
