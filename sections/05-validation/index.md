@@ -42,8 +42,14 @@ nav_order: 6
 
 ## Acceptance tests (manual)
 
-- If you did any manual testing, describe it here
-- Report the test rationale/plan so that another person can repeat the tests
-    + better would be for acceptance tests to match the acceptance criteria of the requirements
-- Report success rate here
+### Connectivity Verification (Preliminary)
+
+During the initial development of the **Data Acquisition Layer**, a manual verification script was created to ensure connectivity with Threat Intelligence providers.
+
+**Test Script:** `tests/test_download.py`
+**Goal:** Verify HTTP connection to Tranco and URLHaus and print a data preview.
+**Execution:**
+```bash
+PYTHONPATH=. python3 tests/test_download.py
+```
 
