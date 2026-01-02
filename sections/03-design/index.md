@@ -50,10 +50,9 @@ This separation allows for independent testing of the scraper and the neural net
 
 ### Object-oriented modelling
 
-The following Class Diagram represents the **Data Acquisition Layer**. The key design decision here is the **Encapsulation** of the HTTP logic within the `DatasetLoader` class.
-
 The class is designed to accept URLs via Dependency Injection in the constructor (`__init__`), ensuring that the component is testable and not hard-coded to specific external servers.
 
+```plantuml
 @startuml
 skinparam classAttributeIconSize 0
 
@@ -78,6 +77,13 @@ note right of DatasetLoader::malicious_url
 end note
 
 @enduml
+```
+### Design Decisions
+
+    * **Encapsulation**: The logic for connecting to external HTTP servers is encapsulated within the `DatasetLoader`. The rest of the software does not need to know about `requests` or CSV parsing.
+    * **Configurability**: URLs are passed as arguments to the constructor (`__init__`), allowing dependency injection.
+
+
 
 ### In case of a distributed system
 
