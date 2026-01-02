@@ -80,8 +80,8 @@ end note
 ```
 ### Design Decisions
 
-    * **Encapsulation**: The logic for connecting to external HTTP servers is encapsulated within the `DatasetLoader`. The rest of the software does not need to know about `requests` or CSV parsing.
-    * **Configurability**: URLs are passed as arguments to the constructor (`__init__`), allowing dependency injection.
+* **Encapsulation**: The logic for connecting to external HTTP servers is encapsulated within the `DatasetLoader`. The rest of the software does not need to know about `requests` or CSV parsing.
+* **Configurability**: URLs are passed as arguments to the constructor (`__init__`), allowing dependency injection.
 
 
 
