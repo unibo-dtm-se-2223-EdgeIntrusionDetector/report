@@ -17,7 +17,7 @@ permalink: /
 Welcome to the official documentation of the **EdgeIntrusionDetector** project. This software artifact provides a lightweight, distributed security layer for resource-constrained IoT environments, shifting threat classification from central cloud networks directly to the network Edge.
 
 ## Table of Contents
-* **01. Concept** (Completed)
+* **01. Concept**
 * Requirements
 * Design
 * Development
