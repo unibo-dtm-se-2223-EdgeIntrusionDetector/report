@@ -35,4 +35,4 @@ To build a scientifically rigorous defense framework, this project discards stat
 ## 1.4 General System Flow
 The overall lifecyle of the system is split into an offline automated MLOps pipeline on the host machine and an online real-time intrusion interception loop on the microcontroller node.
 
-![General System Flow Diagram](images/01-general-flow.png)
+![General System Flow Diagram](../../pictures/01-general-flow.png)

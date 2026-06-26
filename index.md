@@ -5,23 +5,37 @@ has_children: false
 nav_order: 1
 ---
 
-# Project title
+---
+layout: default
+title: Home
+nav_order: 1
+permalink: /
+---
 
-### Authors
+# EdgeIntrusionDetector: Embedded Security
 
-- [Giovanni Ciatto](mailto:giovanni.ciatto@unibo.it)
-- [Davide Domini](mailto:davide.domini@unibo.it)
+Welcome to the official documentation of the **EdgeIntrusionDetector** project. This software artifact provides a lightweight, distributed security layer for resource-constrained IoT environments, shifting threat classification from central cloud networks directly to the network Edge.
 
-## Abstract
+## Table of Contents
+* **01. Concept** (Completed)
+* Requirements
+* Design
+* Development
+* Validation
+* Release
+* Deployment
+* CI/CD
+* User Guide
+* Developer Guide
+* Self Evaluation
+* Future Works
 
-(~ 2000 characters)
+---
 
-Here you should briefly explain what the project is about.
+### Academic Framework
+This project is developed as the final examination for the following academic courses:
 
-## Disclaimer (if needed)
+* **Software Engineering** (Prof. Giovanni Ciatto) - Department of Computer Science and Engineering (DISI) of Alma Mater Studiorum University of Bologna (Cesena’s Campus)
+* **Software per le Telecomunicazioni** (Prof. Alessandro Guidotti) - Department of Electrical, Electronic and Information Engineering "Guglielmo Marconi" (DEI), Alma Mater Studiorum Università di Bologna
 
-During the preparation of this work, the author(s) used [NAME TOOL / SERVICE] to [REASON].
-
-After using this tool/service, the author(s) reviewed and edited the content as needed
-and take(s) full responsibility for the content of the final report/artifact.
 
