@@ -1,15 +1,9 @@
 ---
 title: Home
-layout: home
+layout: default
 has_children: false
 nav_order: 1
----
-
----
-layout: default
-title: Home
-nav_order: 1
-permalink: /
+permalink:/
 ---
 
 # EdgeIntrusionDetector: Embedded Security
@@ -17,7 +11,7 @@ permalink: /
 Welcome to the official documentation of the **EdgeIntrusionDetector** project. This software artifact provides a lightweight, distributed security layer for resource-constrained IoT environments, shifting threat classification from central cloud networks directly to the network Edge.
 
 ## Table of Contents
-* **01. Concept**
+* **[01. Concept](./sections/01-concept/)**
 * Requirements
 * Design
 * Development
