@@ -12,7 +12,7 @@ Welcome to the official documentation of the **EdgeIntrusionDetector** project. 
 
 ## Table of Contents
 * **[01. Concept](./sections/01-concept/)**
-* Requirements
+* **[02. Requirements](./sections/02-requirements/)**
 * Design
 * Development
 * Validation
