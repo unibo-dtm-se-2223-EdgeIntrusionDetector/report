@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+left to right direction
+
+package "Python BaseStation OOP Design" {
+    class DatasetScanner {
+        + raw_csv_path: String
+        + load_and_clean_dataset(): DataFrame
+        + extract_behavioral_features(): DataFrame
+    }
+
+    class IntelligenceOrchestrator {
+        + alpha_pruning_param: float
+        + max_depth: int
+        + train_tree_model(data: DataFrame): DecisionTreeClassifier
+        + evaluate_confusion_matrix(): Matrix
+    }
+
+    class C99Transpiler {
+        + output_header_path: String
+        + transpile_tree_to_c(model: DecisionTreeClassifier): String
+        + write_header_file(): void
+    }
+
+    class DriftSupervisor {
+        + heartbeat_timeout: int
+        + historical_frequency_baseline: float
+        + verify_network_drift(current_rate: float): boolean
+        + process_heartbeat_window(): void
+    }
+}
+
+package "C99 MicroShield Procedural Schema" {
+    class NetworkFeatures << (S, #LightGray) struct >> {
+        + packet_rate: float
+        + payload_size_avg: float
+        + payload_size_var: float
+    }
+    
+    note right: Equivalent interface generated via C99Transpiler
+
+    class microshield_core {
+        + microshield_classify(NetworkFeatures* features): int
+        + edge_mitigation_handler(int classification_verdict): void
+    }
+}
+
+DatasetScanner --> IntelligenceOrchestrator
+IntelligenceOrchestrator --> C99Transpiler
+C99Transpiler ..> NetworkFeatures : Generates Definition
+DriftSupervisor --[hidden]> NetworkFeatures
+@enduml
+

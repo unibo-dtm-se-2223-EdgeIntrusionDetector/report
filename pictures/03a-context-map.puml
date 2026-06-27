@@ -1,0 +1,22 @@
+@startuml
+skinparam handwritten false
+skinparam monochrome true
+skinparam shadowing false
+
+package "Analytical Bounded Context (BaseStation Domain)" #White {
+    entity "ThreatDataset" as TD
+    entity "PrunedDecisionTree" as PDT
+    class "TranspiledSourceCode" as TSC <<Value Object>>
+}
+
+package "Runtime Security Bounded Context (MicroShield Domain)" #White {
+    class "NetworkFeatures" as NF <<Value Object>>
+    entity "MitigationState" as MSt
+}
+
+TD --> PDT : "Ingested By"
+PDT --> TSC : "Triggers Generation"
+TSC ..> NF : "Upstream/Downstream Contract"
+NF --> MSt : "Evaluates"
+@enduml
+

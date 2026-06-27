@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+
+node "Management Host PC (IT Infrastructure Network)" {
+    node "Python 3.10 Runtime (Poetry Virtualenv)" {
+        artifact "BaseStation Core Engine" as BaseCore
+        artifact "Streamlit Web UI" as BaseUI
+    }
+    database "SQLite Local Storage\n(Threat Logs & Metrics)" as DB
+}
+
+node "STM32F407RE Microcontroller (Periphery OT Network)" as Target {
+    node "Bare-Metal ISO C Execution Context" {
+        artifact "MicroShield Middleware (.h/.c)" as Lib
+        artifact "Main Firmware Application" as Firmware
+    }
+}
+
+cloud "Secure Field Comm Line (UART / Isolated IP Service Socket)" as Bus
+
+BaseCore <--> Bus
+Bus <--> Lib : Transpiled Rules Flashing / Live Telemetry Alerts & Override
+BaseCore --> DB : Persistent I/O
+BaseUI <--> BaseCore : In-Memory IPC
+Lib -[hidden]-> Firmware
+@enduml
+

@@ -1,0 +1,46 @@
+@startuml
+skinparam handwritten false
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam shadowing false
+
+box "Ubuntu Host PC (Command & Control)" #LightGray
+actor "Operator (Alice/Bob)" as Operator
+participant "FleetUI (Streamlit)" as UI
+participant "IntelligenceEngine (Facade)" as Engine
+database "Threat Feeds (Academic CSVs)" as DB
+end box
+
+box "Edge IoT Node (STM32)" #White
+participant "MicroShield (C99 Library)" as Shield
+participant "Main Application Loop" as App
+end box
+
+== Offline MLOps Pipeline ==
+Operator -> UI : Configure & Start Pipeline
+activate UI
+UI -> Engine : execute_mlops_pipeline()
+activate Engine
+Engine -> DB : Scrape behavioral network logs (Edge-IIoTset / IoT-23)
+Engine -> Engine : Harmonize & Preprocess features (Pandas)
+Engine -> Engine : Train Decision Tree & Apply Cost-Complexity Pruning
+Engine -> Shield : Export generated 'microshield.h' (if/else constructs + PSK)
+deactivate Engine
+UI --> Operator : Display training metrics & confirmation
+deactivate UI
+
+== Online Real-Time Protection ==
+[-> Shield : Incoming Network Packet Buffer
+activate Shield
+Shield -> Shield : microshield_classify(packet_rate, payload_size_var)
+alt Classified as SAFE (0)
+    Shield -> App : Forward payload to hardware loops
+    note right: Green LED ON
+else Classified as THREAT (1)
+    Shield -> Shield : Drop Packet & Trigger Exponential Backoff
+    note right: Red LED ON / Blinking
+    Shield -> UI : Asynchronously dispatch Alert String
+end alt
+deactivate Shield
+@enduml
+

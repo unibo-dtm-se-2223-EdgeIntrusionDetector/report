@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam componentStyle rectangle
+
+component "Central Base Station (Python Workspace)" as BS {
+    component "DatasetScanner" as DS
+    component "IntelligenceOrchestrator" as IO
+    component "C99Transpiler" as TR
+    component "DriftSupervisor" as SV
+    component "StreamlitDashboard" as UI
+}
+
+component "Edge Node (STM32 Firmware)" as EN {
+    component "Main Application Loop" as App
+    component "Network Driver ISR / DMA" as ISR
+    component "MicroShield (Middleware Library)" as MS
+}
+
+DS .> IO : Formatted Features
+IO .> TR : Trained DecisionTree Object
+TR --> MS : Exports microshield.h (Transpiled Rules)
+ISR -> MS : Ingests Packet Buffers
+MS ..> ISR : Drops / Accepts Verdict
+SV <--> UI : Alerts & Logs Mapping
+@enduml
+

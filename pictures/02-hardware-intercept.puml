@@ -1,0 +1,52 @@
+@startuml
+skinparam handwritten false
+skinparam monochrome true
+skinparam shadowing false
+skinparam boxPadding 10
+
+box "Hardware Layer" #LightGray
+participant "Network Interface\n(Ethernet/Wi-Fi)" as Net
+participant "DMA Controller" as DMA
+end box
+
+box "STM32 MCU Core" #White
+participant "Interrupt Controller\n(NVIC / ISR)" as ISR
+participant "MicroShield\n(C Library)" as Shield
+participant "Main Superloop\n(while(1))" as Loop
+database "Static RAM Buffer" as RAM
+end box
+
+== SCENARIO A: Superloop Failure Pattern (Anti-Pattern) ==
+Net -> DMA : Flood of malicious frames (DoS Attack)
+activate DMA
+DMA -> RAM : Continuous silent background write
+DMA -> RAM : Continuous silent background write
+note over RAM #FFCCCC: Buffer Overflow Condition!\nUnprocessed data overwritten
+Loop -> Loop : Execute slow application logic (e.g., I2C Sensor Read)
+Loop -> RAM : Read buffer to evaluate threat (Too Late!)
+note right: CPU starvation occurs;\nMain application freezes
+deactivate DMA
+
+== SCENARIO B: Proactive ISR-Level Interception (MicroShield Blueprint) ==
+Net -> DMA : Deposit incoming frame (e.g., 128 bytes)
+activate DMA
+DMA -> RAM : Write single frame to bounded slot
+DMA -> ISR : Assert Hardware Interrupt Request (IRQ)
+deactivate DMA
+activate ISR
+ISR -> Loop : Suspend CPU execution context
+Loop --[hidden]> ISR
+
+ISR -> Shield : microshield_classify()
+activate Shield
+note over Shield: Deterministic O(d) execution\nNested execution paths
+Shield --> ISR : Return: THREAT (1)
+deactivate Shield
+
+ISR -> DMA : Force Instant Hardware Pointer Reset
+note over RAM: Frame dropped and memory\nslipped before ingestion
+ISR -> Loop : Restore CPU context
+deactivate ISR
+Loop -> Loop : Resume application cycles (Zero impact)
+@enduml
+

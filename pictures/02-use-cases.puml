@@ -1,0 +1,37 @@
+@startuml
+skinparam handwritten false
+skinparam monochrome true
+skinparam shadowing false
+
+left to right direction
+
+actor "Alice (Fleet Manager)" as Alice
+actor "Bob (Security Analyst)" as Bob
+actor "Edge Node (Hardware/Timer)" as Node
+
+rectangle "EdgeIntrusionDetector System" {
+    (UC1: Automate Data Ingestion & Scraping) as UC1
+    (UC2: Train Model & Configure Pruning) as UC2
+    (UC3: Transpile Tree to C Header) as UC3
+    (UC4: Monitor Dashboard & Live Alert Logs) as UC4
+    (UC5: Trigger Agnostic Remote Override) as UC5
+    (UC6: Inspect Network Drift & Heartbeat) as UC5_1
+    
+    (UC7: Real-Time Hardware Packet Classification) as UC6
+    (UC8: Execute Two-Tier Mitigation Isolation) as UC7
+    (UC9: Perform Mandatory On-Field Recovery) as UC8
+}
+
+Bob --> UC1
+Bob --> UC2
+UC2 ..> UC3 : <<include>>
+
+Alice --> UC4
+Alice --> UC5
+Alice --> UC5_1
+
+Node --> UC6
+Node --> UC7
+Node --> UC8
+@enduml
+
