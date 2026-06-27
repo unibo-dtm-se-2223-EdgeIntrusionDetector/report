@@ -1,0 +1,69 @@
+@startuml
+skinparam handwritten false
+skinparam monochrome true
+skinparam shadowing false
+
+actor "Alice (Fleet Manager)" as Alice
+participant "Streamlit Dashboard" as UI
+participant "DriftSupervisor (BaseStation)" as SV
+participant "Network Driver (ISR / DMA)" as ISR
+participant "MicroShield (Edge Node)" as Shield
+
+== Scenario 1: Proactive Detection & Tier 1 Soft Isolation ==
+[-> ISR : Incoming Packet Buffer (Malicious Flooding)
+activate ISR
+ISR -> Shield : microshield_classify(features)
+activate Shield
+note over Shield : O(d) Bounded Inference
+Shield --> ISR : Return VERDICT = 1 (THREAT)
+deactivate Shield
+ISR -> ISR : Reset Hardware DMA Pointers
+note over ISR : Frame dropped before application ingestion
+ISR -> UI : Async Dispatch "TelemetryAlert" (Via Service Line)
+deactivate ISR
+activate UI
+UI -> UI : Log Intrusion Event
+UI --> Alice : Flash Red Alert Notification
+deactivate UI
+
+== Scenario 2: Remote Override State (Falsi Positivi) ==
+Alice -> UI : Review Logs & Assert False Positive
+activate UI
+UI -> ISR : Transmit "OverrideCommand" (Cryptographically Signed)
+deactivate UI
+activate ISR
+ISR -> Shield : Reset Edge Mitigation Flags & Timers
+activate Shield
+note over Shield : Clear Exponential Backoff
+Shield --> ISR : Confirmed Status Nominal
+deactivate Shield
+ISR -> ISR : Set Green LED State
+deactivate ISR
+
+== Scenario 3: Agnostic Network Drift Escalation (Falsi Negativi) ==
+[-> ISR : Silent Attack Frame (Bypasses Local Model)
+activate ISR
+ISR -> Shield : microshield_classify(features)
+activate Shield
+Shield --> ISR : Return VERDICT = 0 (SAFE)
+deactivate Shield
+ISR -> SV : Forward Agnostic Transport Metadata
+deactivate ISR
+activate SV
+SV -> SV : Analyze Historical Packet Frequency Baseline
+note over SV #FFCCCC : Network Drift Detected! / Heartbeat Timeout
+SV -> UI : Force Global Security Escalation Directive
+deactivate SV
+activate UI
+UI -> ISR : Dispatch Mandatory "Hard Isolation" Order
+deactivate UI
+activate ISR
+ISR -> Shield : Transition to TIER 2 (LOCKDOWN)
+activate Shield
+note over Shield : Shutdown logical network channels
+Shield --> ISR : Confirmed Lock
+deactivate Shield
+ISR -> ISR : Set Solid Red LED State
+deactivate ISR
+@enduml
+

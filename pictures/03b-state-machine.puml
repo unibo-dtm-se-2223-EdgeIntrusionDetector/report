@@ -1,0 +1,39 @@
+@startuml
+skinparam handwritten false
+skinparam monochrome true
+skinparam shadowing false
+
+[*] --> NOMINAL_OPERATION : System Boot / Compilation Flash
+
+state NOMINAL_OPERATION {
+    [*] --> ActiveMonitoring
+    ActiveMonitoring : Green LED = ON
+    ActiveMonitoring : Run O(d) ISR Classifications
+    ActiveMonitoring : Send Heartbeat Frames
+}
+
+NOMINAL_OPERATION --> TIER1_SOFT_ISOLATION : Local MicroShield Defeat (VERDICT = 1)
+NOMINAL_OPERATION --> TIER2_HARD_LOCKDOWN : BaseStation Network Drift / Heartbeat Timeout
+
+state TIER1_SOFT_ISOLATION {
+    [*] --> ExponentialBackoffActive
+    ExponentialBackoffActive : Blink Red LED
+    ExponentialBackoffActive : Suppress Application Telemetry
+    ExponentialBackoffActive : Increment Backoff Interval (t = t * 2)
+    ExponentialBackoffActive : Keep Service Channel Awake
+}
+
+TIER1_SOFT_ISOLATION --> NOMINAL_OPERATION : Valid Remote Override Received (Alice Signal)
+TIER1_SOFT_ISOLATION --> TIER2_HARD_LOCKDOWN : Attack Persists > 30 Seconds / BaseStation Command
+
+state TIER2_HARD_LOCKDOWN {
+    [*] --> HermeticMute
+    HermeticMute : Solid Red LED = ON
+    HermeticMute : Drop 100% Remote Network Packets
+    HermeticMute : Isolate MCU Logical Execution Core
+    HermeticMute : Wait for Physical Interrupt Vector
+}
+
+TIER2_HARD_LOCKDOWN --> NOMINAL_OPERATION : Physical Assert of Hardware User Button (On-Field Reset)
+@enduml
+

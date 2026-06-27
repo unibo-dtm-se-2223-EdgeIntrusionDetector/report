@@ -6,7 +6,7 @@ nav_order: 3
 
 # 2. System Requirements
 
-This section formalizes the user stories, functional requirements, non-functional requirements, implementation constraints, and explicit acceptance criteria for the **EdgeIntrusionDetector** framework.
+This section formalizes the user stories, functional requirements, non-functional requirements, implementation constraints, and explicit acceptance criteria for the **Edge Intrusion Detector** framework.
 
 ## 2.1 User Stories & Personas
 
@@ -91,6 +91,7 @@ The following diagram details the explicit interactions between human operators,
 ![System Use Cases](../../pictures/02-use-cases.png)
 
 ## 2.4 Architectural Trade-Off Analysis
-The following diagram details why an ISR-level classification model is mandatory compared to traditional Superloop models when subjected to malicious network packet saturation.
+The following diagram details why an ISR-level classification model is mandatory compared to traditional Superloop models when subjected to adversarial network packet saturation.
 
 ![Hardware Interception Trade-Off Analysis](../../pictures/02-hardware-intercept.png)
+
