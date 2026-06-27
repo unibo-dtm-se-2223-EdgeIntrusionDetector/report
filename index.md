@@ -1,28 +1,16 @@
 ---
-title: Home
 layout: default
-has_children: false
 nav_order: 1
-permalink:/
+permalink: /
 ---
 
-# EdgeIntrusionDetector: Embedded Security
+# Edge Intrusion Detector
 
-Welcome to the official documentation of the **EdgeIntrusionDetector** project. This software artifact provides a lightweight, distributed security layer for resource-constrained IoT environments, shifting threat classification from central cloud networks directly to the network Edge.
+## Development of MicroShield: a native C library for edge-level threat interception and central remote orchestration
 
-## Table of Contents
-* **[01. Concept](./sections/01-concept/)**
-* **[02. Requirements](./sections/02-requirements/)**
-* Design
-* Development
-* Validation
-* Release
-* Deployment
-* CI/CD
-* User Guide
-* Developer Guide
-* Self Evaluation
-* Future Works
+<p style="font-size: 1.15em; line-height: 1.6; color: #2c3e50;">
+Welcome to the official technical report of the <strong>Edge Intrusion Detector</strong> framework. This project engineers <strong>MicroShield</strong>, a deterministic, non-allocating C library tailored for resource-constrained microcontrollers to stop network incursions directly within hardware interrupt vectors. The entire distributed peripheral lifecycle is dynamically orchestrated, evaluated, and driven via an autonomous Python Base Station and management core.
+</p>
 
 ---
 
@@ -31,5 +19,3 @@ This project is developed as the final examination for the following academic co
 
 * **Software Engineering** (Prof. Giovanni Ciatto) - Department of Computer Science and Engineering (DISI) of Alma Mater Studiorum University of Bologna (Cesena’s Campus)
 * **Software per le Telecomunicazioni** (Prof. Alessandro Guidotti) - Department of Electrical, Electronic and Information Engineering "Guglielmo Marconi" (DEI), Alma Mater Studiorum Università di Bologna
-
-
